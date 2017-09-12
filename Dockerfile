@@ -1,6 +1,8 @@
-FROM python_webapp
+FROM python:latest
   
-MAINTAINER amouat
+WORKDIR /app
   
-ADD example_app.wsgi /var/www/flaskapp/flaskapp.wsgi
-CMD service apache2 start && tail -F /var/log/apache2/error.log
+RUN mkdir tmp && pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+EXPOSE 5000
+CMD ["python", "./manage.py", "runserver", "-h", "0.0.0.0"]
