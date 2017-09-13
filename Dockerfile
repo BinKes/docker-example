@@ -1,8 +1,19 @@
-FROM python:latest
+# Use an official Python runtime as a parent image
+FROM python:3.6
   
+# Set the working directory to /app
 WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+ADD . /app
   
-RUN mkdir tmp && pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install -r requirements.txt
 
 EXPOSE 5000
-CMD ["python", "./manage.py", "runserver", "-h", "0.0.0.0"]
+
+# Define environment variable
+ENV NAME Example
+
+# Run run_server.py when the container launches
+CMD ["python", "run_server.py"]
